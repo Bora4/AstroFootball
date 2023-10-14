@@ -1,9 +1,26 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
+import VideoUpload from "../components/VideoUpload.astro";
+import "../styles/global.css";
+
+if (Astro.request.method === "POST") {
+	try {
+	  const data = await Astro.request.formData();
+	  console.log('received file');
+	  const video = data.get("video_upload");
+	  
+	} catch (error) {
+	  if (error instanceof Error) {
+		console.error(error.message);
+	  }
+	}
+}
 ---
+
 <Layout title="AstroFootball">
-    <main>
-        <h1>Upload Your Video Here</h1>
-        <input type="file" name="video_upload" id="video_upload">
-    </main>
+	<div class="container">
+		<p>Received a {Astro.request.method} request to "{Astro.request.url}".</p>
+		<p>Received request headers: <code>{JSON.stringify(Object.fromEntries(Astro.request.headers))}</code>
+        <p> <code>{JSON.stringify(Astro.request.body)}</code>  </p>
+	</div>
 </Layout>

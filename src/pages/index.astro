@@ -2,6 +2,19 @@
 import Layout from "../layouts/Layout.astro";
 import VideoUpload from "../components/VideoUpload.astro";
 import "../styles/global.css";
+
+if (Astro.request.method === "POST") {
+	try {
+	  const data = await Astro.request.formData();
+	  console.log('received file');
+	  const video = data.get("video_upload");
+	  
+	} catch (error) {
+	  if (error instanceof Error) {
+		console.error(error.message);
+	  }
+	}
+}
 ---
 
 <Layout title="AstroFootball">
@@ -19,6 +32,8 @@ import "../styles/global.css";
 			breakdowns. Say goodbye to traditional video analysis methods and
 			embrace a new era of football intelligence with AstroFootball.
 		</p>
+		<p>Received a {Astro.request.method} request to "{Astro.request.url}".</p>
+		<p>Received request headers: <code>{JSON.stringify(Object.fromEntries(Astro.request.headers))}</code>
 		<VideoUpload />
 	</div>
 </Layout>
